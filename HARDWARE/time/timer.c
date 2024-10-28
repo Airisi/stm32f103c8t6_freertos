@@ -844,5 +844,52 @@ void TIM8_UP_IRQHandler(void)   //TIM1ÖÐ¶Ï
 #endif	/*TIM1_Int*/
 
 
+void PWM1_SetCompare1(uint16_t Compare)
+{
+	TIM_SetCompare1(TIM1, Compare);
+}
 
 
+/*
+SG90 - 180
+High Pulse Duration (ms)    Angle (°)
+--------------------------  --------
+0.5                         0
+1.0                         45
+1.5                         90
+2.0                         135
+2.5                         180
+
+SG90 - 360
+High Pulse Duration (ms)    Servo Direction and Speed
+--------------------------  -------------------------
+0.5 ~ 1.5                   Forward, speed decreasing
+1.5                         Stop
+1.5 ~ 2.5                   Reverse, speed increasing
+
+*/
+
+/*******************************************************************
+ * @name       :void timer1_ch1_task(void *pvParameters)
+ * @date       :2024-10-28
+ * @function   :TIMER1_CH1ÈÎÎñº¯Êý
+ * @parameters :*pvParameters:ÈÎÎñ²ÎÊý
+ * @retvalue   :ÎÞ
+********************************************************************/
+void timer1_ch1_task(void *pvParameters)
+{
+    const uint16_t delay_ms = 500;         // Delay time in milliseconds
+    const uint16_t compare_values[] = {5, 10, 15, 20, 25}; // Array of compare values
+    const uint8_t compare_count = sizeof(compare_values) / sizeof(compare_values[0]);
+
+    TIM1_Int_Init(199, 7199); // Initialize timer interrupt with given parameters
+
+    while (1)
+    {
+        for (uint8_t i = 0; i < compare_count; i++)
+        {
+            PWM1_SetCompare1(compare_values[i]); // Set PWM compare value
+            vTaskDelay(delay_ms);                 // Delay for a specified time
+        }
+    }
+}

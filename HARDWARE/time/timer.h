@@ -4,7 +4,13 @@
 
 #include	"stm32f10x.h"
 
-#define	TIM1_Int	0
+#include "system.h"
+#if SYSTEM_SUPPORT_OS
+#include "FreeRTOS.h"
+#include "task.h"
+#endif
+
+#define	TIM1_Int	1
 #define	TIM2_Int	0
 #define	TIM3_Int	10
 #define	TIM4_Int	0
@@ -18,7 +24,7 @@
 
 #define TIM1_BDTRInitStructure	0	//死区刹车
 
-#define TIM1_OCInitStructure	0
+#define TIM1_OCInitStructure	1
 #define TIM2_OCInitStructure	0
 #define TIM3_OCInitStructure	10
 #define TIM4_OCInitStructure	0
@@ -28,7 +34,7 @@
 #endif
 
 
-#define TIM1_CH1	0	//PA8
+#define TIM1_CH1	1	//PA8
 #define TIM1_CH1N	0	//PB13互不输出
 #define TIM1_CH2	0	//PA9
 #define TIM1_CH2N	0	//PB14互不输出
@@ -60,7 +66,7 @@
 
 
 
-#define TIM1_NVIC 0
+#define TIM1_NVIC 1
 #define TIM2_NVIC 0
 #define TIM3_NVIC 0
 #define TIM4_NVIC 0
@@ -82,6 +88,7 @@ extern void TIM7_Int_Init(u16 arr,u16 psc);
 extern void TIM8_Int_Init(u16 arr,u16 psc);
 #endif
 
+void timer1_ch1_task(void *pvParameters);//任务函数
 
 #endif
 

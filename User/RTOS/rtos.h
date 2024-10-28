@@ -10,6 +10,7 @@
 #include "task.h"
 #endif
 #include	"led.h"
+#include  "timer.h"
 
 
 #define START_TASK_PRIO		0//任务优先级
@@ -26,6 +27,9 @@ extern TaskHandle_t LED0Task_Handler;//任务句柄
 #define LED1_STK_SIZE 		50  //任务堆栈大小
 extern TaskHandle_t LED1Task_Handler;//任务句柄
 
+#define TIMER1CH1_Task_PRIO		2//任务优先级
+#define TIMER1CH1_STK_SIZE 		50  //任务堆栈大小
+extern TaskHandle_t TIMER1CH1Task_Handler;//任务句柄
 
 void start_task(void *pvParameters);//任务函数
 
